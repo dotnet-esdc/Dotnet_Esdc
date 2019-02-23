@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson2.MySortApplication", "Lesson2.MySortApplication\Lesson2.MySortApplication.csproj", "{1159B888-10BE-41BA-8E61-CB4E0232EA01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{2399DC50-221B-4521-84F7-773A6FC4663F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2399DC50-221B-4521-84F7-773A6FC4663F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2399DC50-221B-4521-84F7-773A6FC4663F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1159B888-10BE-41BA-8E61-CB4E0232EA01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1159B888-10BE-41BA-8E61-CB4E0232EA01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1159B888-10BE-41BA-8E61-CB4E0232EA01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1159B888-10BE-41BA-8E61-CB4E0232EA01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +43,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B8C3CEE1-AA16-43C4-AEA3-A523D09C2B78} = {86F619EC-A98B-4C5D-99E4-ACBFA5D1E45C}
 		{2399DC50-221B-4521-84F7-773A6FC4663F} = {86F619EC-A98B-4C5D-99E4-ACBFA5D1E45C}
+		{1159B888-10BE-41BA-8E61-CB4E0232EA01} = {F22B4A2D-6C69-4552-8D30-A0AEC78F79EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3450652D-8F55-4A74-A423-9D071C34D18E}
