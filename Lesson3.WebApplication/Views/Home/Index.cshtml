@@ -1,0 +1,50 @@
+﻿@using Lesson3.WebApplication.Models
+@model List<Product>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Product list</h2>
+
+<a>
+    <span class="glyphicon glyphicon-arrow-left"></span>
+</a>
+<a href="/Home/Index?lastElementIndex=@ViewBag.LastElementId">
+    <span class="glyphicon glyphicon-arrow-right"></span>
+</a>
+
+<br />
+
+<a href="/Home/Create">create</a>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a href="/Home/Detail/@item.Id">@item.Id</a>
+                </td>
+                <td>@item.Name</td>
+                <td>@item.Price</td>
+                <td>
+                    <a href="/Home/Update/@item.Id">
+                        <span class="glyphicon glyphicon-pencil label-success"></span>
+                    </a>
+                    <a href="/Home/Delete/@item.Id">
+                        <span class="glyphicon glyphicon-remove label-warning"></span>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

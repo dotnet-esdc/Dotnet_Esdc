@@ -1,0 +1,21 @@
+﻿@using Lesson3.WebApplication.Models
+@model Product
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    <label>Id</label> <input name="Id" type="number" />
+    <br />
+
+    <label>Name</label> <input name="Name" type="text" />
+    <br />
+
+    <label>Price</label> <input name="Price" type="number" />
+    <br />
+
+    <input type="submit" value="Send" />
+}

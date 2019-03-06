@@ -1,0 +1,29 @@
+﻿@using Lesson3.WebApplication.Models
+@model Product
+
+@{
+    ViewBag.Title = "Update";
+}
+
+<h2>Update</h2>
+
+@using (Html.BeginForm())
+{
+    <label>Id</label>
+    @Html.EditorFor(model => model.Id)
+
+    <br />
+
+    <label>Name</label>
+    @Html.EditorFor(model => model.Name)
+
+    <br />
+
+    <label>Price</label>
+    @Html.EditorFor(model => model.Price)
+
+    <br />
+
+    <input type="submit" value="Send" />
+
+}

@@ -1,0 +1,30 @@
+﻿@using Lesson3.WebApplication.Models
+@model Product
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+@using (Html.BeginForm())
+{
+    <h3>Are you sure?</h3>
+
+    <label>Id</label>
+    @Html.EditorFor(c => c.Id)
+
+    <br />
+
+    <label>Name</label>
+    @Html.EditorFor(c => c.Name)
+
+    <br />
+    <label>Price</label>
+    @Html.EditorFor(c => c.Price)
+
+    <br />
+
+    <input type="submit" value="Remove" />
+
+}
