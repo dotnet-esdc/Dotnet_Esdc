@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div ng-app="my-app-module"
+     ng-controller="my-app-controller"
+     ng-init="getProducts()">
+    <h2>
+        My product list
+    </h2>
+
+    <button class="btn btn-success"
+            data-toggle="modal"
+            data-target="#myModal"
+            ng-click="create()">
+        <span class="glyphicon glyphicon-plus"></span>
+        Create
+    </button>
+
+    <button class="btn btn-default"
+            ng-click="getProducts()">
+        <span class="glyphicon glyphicon-refresh"></span>
+        Refresh
+    </button>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in productCollection">
+                <td>{{item.Id}}</td>
+                <td>{{item.Name}}</td>
+                <td ng-class="{'text-danger': item.Price < 99, 'text-warning': item.Price < 199, 'text-success': item.Price > 200 }"
+                    >{{item.Price}}</td>
+                <td>
+                    <label class="text-warning"
+                           data-toggle="modal"
+                           data-target="#myModal"
+                           ng-click="update(item)">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        Edit
+                    </label>
+                </td>
+                <td>
+                    <label class="text-danger"
+                           data-toggle="modal"
+                           data-target="#myModal"
+                           ng-click="remove(item)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        Remove
+                    </label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        Id
+                        <input class="form-control" type="number"
+                               ng-model="currentItem.Id"/>
+                    </div>
+                    <div>
+                        Name
+                        <input class="form-control" type="text"
+                               ng-model="currentItem.Name"/>
+                    </div>
+                    <div>
+                        Price
+                        <input class="form-control" type="number"
+                               ng-model="currentItem.Price"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary"
+                            ng-click="saveChanges()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
