@@ -1,0 +1,185 @@
+﻿@using Lesson5_MyStore.Entities
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Sales</h2>
+
+<div class="row">
+    <div class="col-8">
+        <div class="card">
+            <div class="card-header">
+                Продажи
+            </div>
+            <div class="card-body">
+                @(Html.DevExtreme().DataGrid<Sale>()
+                    .ID("sale-crud-grid")
+                    .DataSource(d => d
+                        .WebApi()
+                        .Controller("Sales")
+                        .LoadAction("Get")
+                        .InsertAction("Post")
+                        .UpdateAction("Put")
+                        .DeleteAction("Delete")
+                        .Key("Id")
+                    )
+                    .Export(ex => ex.Enabled(true))
+                    .ShowBorders(true)
+                    .FilterRow(f => f.Visible(true))
+                    .GroupPanel(g => g
+                        .Visible(true))
+                    .Editing(e => e
+                        .AllowAdding(true)
+                        .AllowDeleting(true)
+                        .AllowUpdating(true)
+                        .Mode(GridEditMode.Batch))
+                    .Columns(cols =>
+                    {
+                        cols.AddFor(c => c.Id)
+                            .Caption("ИД")
+                            .Width(200);
+
+                        cols.AddFor(c => c.EmployeeId)
+                            .Lookup(l => l
+                                .DataSource(ds => ds
+                                    .WebApi()
+                                    .Controller("Employees")
+                                    .LoadAction("Get")
+                                    .InsertAction("Post")
+                                    .UpdateAction("Put")
+                                    .DeleteAction("Delete")
+                                    .Key("Id"))
+                                .ValueExpr("Id")
+                                .DisplayExpr("FullName")
+                            ).Caption("Сотрудник");
+
+                        cols.AddFor(c => c.ProductId)
+                            .Lookup(l => l
+                                .DataSource(ds => ds
+                                    .WebApi()
+                                    .Controller("Products")
+                                    .LoadAction("Get")
+                                    .InsertAction("Post")
+                                    .UpdateAction("Put")
+                                    .DeleteAction("Delete")
+                                    .Key("Id"))
+                                .ValueExpr("Id")
+                                .DisplayExpr("Name")
+                            ).Caption("Продукт");
+
+                        cols.AddFor(c => c.Date);
+
+                        cols.AddFor(c => c.Price);
+                        
+
+                    })
+
+                )
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">Статистика продаж</div>
+            <div class="card-body">
+                @(Html.DevExtreme().PieChart()
+                    .ID("pie")
+                    .Size(s => s.Width(500))
+                    .Palette(VizPalette.Bright)
+                    .Series(s => {
+                        s.Add()
+                            .ArgumentField("CategoryName")
+                            .ValueField("SalePrice")
+                            .Label(l => l
+                                .Visible(true)
+                                .Connector(c => c
+                                    .Visible(true)
+                                    .Width(1)
+                                )
+                            );
+                    })
+                    .Title("Area of Categories")
+                    .Export(e => e.Enabled(true))
+                    .OnPointClick(@<text>
+                        function (e) {
+                            var point = e.target;
+                            toggleVisibility(point);
+                        }
+                    </text>)
+                    .OnLegendClick(@<text>
+                        function (e) {
+                            var arg = e.target;
+                            toggleVisibility(this.getAllSeries()[0].getPointsByArg(arg)[0]);
+                        }
+                    </text>)
+                    .DataSource(ds => ds
+                        .WebApi()
+                        .Controller("ChartStatistics")
+                        .LoadAction("Get"))
+                )
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                Продукты
+            </div>
+            <div class="card-body">
+                @(Html.DevExtreme().Chart()
+                    .ID("chart")
+                    .Series(s => s
+                        .Add()
+                        .ArgumentField("ProductName")
+                        .ValueField("SalePrice")
+                        .Name("Products")
+                        .Type(SeriesType.Bar)
+                    )
+                    .DataSource(ds => ds
+                        .WebApi()
+                        .Controller("ChartStatistics")
+                        .LoadAction("Get"))
+                )
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                Категории
+            </div>
+            <div class="card-body">
+                @(Html.DevExtreme().Chart()
+                    .ID("chart-2")
+                    .Series(s => s
+                        .Add()
+                        .ArgumentField("CategoryName")
+                        .ValueField("SalePrice")
+                        .Name("Categories")
+                        .Type(SeriesType.Bar)
+                    )
+                    .DataSource(ds => ds
+                        .WebApi()
+                        .Controller("ChartStatistics")
+                        .LoadAction("Get"))
+                )
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleVisibility(item) {
+        if(item.isVisible()) {
+            item.hide();
+        } else {
+            item.show();
+        }
+    }
+</script>

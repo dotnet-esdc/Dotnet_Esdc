@@ -1,0 +1,44 @@
+﻿@using Lesson5_MyStore.Entities
+@{
+    ViewBag.Title = "Employees";
+}
+
+<h2>Employees</h2>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+
+        @(Html.DevExtreme().DataGrid<Employee>()
+            .ID("employee-crud-grid")
+            .DataSource(d => d
+                .WebApi()
+                .Controller("Employees")
+                .LoadAction("Get")
+                .InsertAction("Post")
+                .UpdateAction("Put")
+                .DeleteAction("Delete")
+                .Key("Id")
+            )
+            .ShowBorders(true)
+            .FilterRow(f => f.Visible(true))
+            .GroupPanel(g => g
+                .Visible(true))
+            .Editing(e => e
+                .AllowAdding(true)
+                .AllowDeleting(true)
+                .AllowUpdating(true)
+                .Mode(GridEditMode.Popup))
+            .Columns(cols =>
+            {
+                cols.AddFor(c => c.Id)
+                    .Caption("ИД")
+                    .Width(200);
+
+                cols.AddFor(c => c.FullName)
+                    .Caption("Полное имя");
+            })
+
+        )
+
+    </div>
+</div>

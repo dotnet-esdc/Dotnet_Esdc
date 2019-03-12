@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Lesson5_MyStore</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    @Styles.Render("~/Content/bundle")
+    @Styles.Render("~/Content/DevExtremeBundle")
+    @Scripts.Render("~/Scripts/bundle")
+    @Scripts.Render("~/Scripts/DevExtremeBundle")
+</head>
+
+<body>
+
+    <nav class="navbar navbar-dark bg-dark fixed-top navbar-expand-md">
+        <a class="navbar-brand" href="/">Lesson5_MyStore</a>
+
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav mr-auto">
+                <li class="active nav-item"><a href="/Home/index" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="/Dictionaries/Categories" class="nav-link">Categories</a></li>
+                <li class="nav-item"><a href="/Dictionaries/Products" class="nav-link">Products</a></li>
+                <li class="nav-item"><a href="/Dictionaries/Employees" class="nav-link">Employees</a></li>
+                <li class="nav-item"><a href="/Sales/Index" class="nav-link">Sales</a></li>
+                
+
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main" class="container-fluid">
+        @RenderBody()
+    </main>
+</body>
+
+</html>

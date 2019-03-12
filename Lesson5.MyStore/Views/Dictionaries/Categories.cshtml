@@ -1,0 +1,45 @@
+﻿@using Lesson5_MyStore.Entities
+@{
+    ViewBag.Title = "Categories";
+}
+
+<h2>Categories</h2>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+
+        @(Html.DevExtreme().DataGrid<Category>()
+            .ID("category-crud-grid")
+            .DataSource(d => d
+                .WebApi()
+                .Controller("Categories")
+                .LoadAction("Get")
+                .InsertAction("Post")
+                .UpdateAction("Put")
+                .DeleteAction("Delete")
+                .Key("Id")
+            )
+            .ShowBorders(true)
+            .FilterRow(f => f.Visible(true))
+            .GroupPanel(g => g
+                .Visible(true))
+            .Editing(e => e
+                .AllowAdding(true)
+                .AllowDeleting(true)
+                .AllowUpdating(true)
+                .Mode(GridEditMode.Popup))
+            .Columns(cols =>
+            {
+                cols.AddFor(c => c.Id)
+                    .Caption("ИД")
+                    .Width(200);
+
+                cols.AddFor(c => c.Name)
+                    .Caption("Название");
+            })
+
+        )
+
+    </div>
+</div>
+
