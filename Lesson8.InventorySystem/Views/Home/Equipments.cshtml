@@ -1,0 +1,63 @@
+﻿@using Lesson8_InventorySystem.Entities
+
+@{
+    ViewBag.Title = "Equipments";
+    
+
+}
+
+<h2>Equipments</h2>
+
+<div class="card">
+    <div class="card-header">
+        Equipments
+    </div>
+    <div class="card-body">
+    @(Html.DevExtreme().DataGrid<Equipment>()
+        .DataSource(ds => ds
+            .WebApi()
+            .Controller("Equipments"))
+        .Editing(ed => ed
+            .AllowAdding(true)
+            .AllowUpdating(true)
+            .AllowDeleting(true)
+            .Mode(GridEditMode.Popup)
+            .Popup(p => p
+                .Title("Equipment")
+                .ShowTitle(true))
+            .Form(f => f
+                .ColCount(1)
+                .Items(i =>
+                {
+                    i.AddGroup()
+                        .Caption("Main Info")
+                        .Items(g =>
+                        {
+                            g.AddSimpleFor(e => e.Id);
+                            g.AddSimpleFor(e => e.Name);
+                            g.AddSimpleFor(e => e.CreateDate);
+                        });
+
+                    i.AddTabbed()
+                        .Tabs(t =>
+                        {
+                            t.Add()
+                                .Badge("1")
+                                .Title("My first tab!");
+
+                            t.Add()
+                                .Badge("2")
+                                .Title("My second tab!");
+
+                        });
+
+                })))
+        .Columns(cols =>
+        {
+            cols.AddFor(c => c.Id);
+            cols.AddFor(c => c.CreateDate);
+            cols.AddFor(c => c.Name);
+        })
+    )
+    </div>
+</div>

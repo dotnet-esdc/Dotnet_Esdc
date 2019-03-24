@@ -1,0 +1,162 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div ng-app="myApp"
+     ng-controller="orderController"
+     ng-init="initialize()">
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            New Order
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label>Title</label>
+                <input class="form-control"
+                       ng-model="title"/>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button class="btn btn-success"
+                    ng-click="create()">Send</button>
+        </div>
+
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Orders
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Created Date</th>
+                        <th>Started Date</th>
+                        <th>Finished Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in collection">
+                        <td>{{item.Id}}</td>
+                        <td>{{item.Name}}</td>
+                        <td>{{item.CreateDate | date: 'yyyy.MM.dd HH:mm'}}</td>
+                        <td>
+                            <label ng-if="item.StartDate != null">
+                                {{item.StartDate | date: 'HH:mm'}}
+                            </label>
+                            <button ng-if="item.StartDate == null"
+                                    class="btn btn-primary"
+                                    ng-click="start(item.Id)">Start</button>
+                        </td>
+                        <td>
+                            <label ng-if="item.FinishDate != null">
+                                {{item.FinishDate | date: 'HH:mm'}}
+                            </label>
+
+                            <button ng-if="item.FinishDate == null && item.StartDate != null"
+                                    class="btn btn-success"
+                                    ng-click="finish(item.Id)">Finish</button>
+
+                            <label ng-if="item.FinishDate == null && item.StartDate == null">
+                                Необходимо начать, чтобы закончить
+                            </label>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<script type="text/javascript">
+    //$(function () {
+        
+
+
+    //});
+
+    // create orderHub
+    var orderHub = $.connection.orderHub;
+
+    //orderHub.server.start(0);
+
+    //orderHub.server.finish(0);
+
+    angular.module('myApp', [])
+        .controller('orderController', function ($scope) {
+
+            $scope.collection = [];
+
+            $scope.title = "";
+
+            $scope.initialize = function () {
+
+                orderHub.client.loadOrders = function (orderCollection) {
+                    $scope.collection = orderCollection;
+                    $scope.$apply();
+                };
+
+                orderHub.client.created = function (order) {
+                    $scope.collection.push(order);
+                    $scope.$apply();
+                };
+
+                orderHub.client.started = function (order) {
+                    var item = $scope.collection.filter(function (elem) {
+                        return elem.Id == order.Id;
+                    })[0];
+                    item.StartDate = order.StartDate;
+                    $scope.$apply();
+                };
+
+                orderHub.client.finished = function (order) {
+                    var item = $scope.collection.filter(function (elem) {
+                        return elem.Id == order.Id;
+                    })[0];
+                    item.FinishDate = order.FinishDate;
+                    $scope.$apply();
+                };
+
+                // here we start initializing
+                $.connection.hub.start().done(function () {
+                    console.log('started');
+                    orderHub.server.loadOrders();
+                });
+            }
+
+            $scope.create = function () {
+                var orderItem = {
+                    Id: 0,
+                    Name: $scope.title,
+                    Author: '',
+                    CreateDate: null,
+                    StartDate: null,
+                    FinishDate: null
+                };
+
+                orderHub.server.create(orderItem);
+            }
+
+            $scope.start = function (id) {
+                orderHub.server.start(id);
+            }
+
+            $scope.finish = function (id) {
+                orderHub.server.finish(id);
+            }
+            
+        });
+
+</script>
