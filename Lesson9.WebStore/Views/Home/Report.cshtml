@@ -1,0 +1,39 @@
+﻿@using Lesson9.Core.DTOs
+@model ICollection<ProductReportDTO>
+@{
+    ViewBag.Title = "Report";
+
+    var result = Model.GroupBy(g => g.ClientName);
+
+}
+
+<h2>Report</h2>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Client</th>
+            <th>Category</th>
+            <th>Product</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in result)
+        {
+            <tr>
+                <td rowspan="@item.Count()">@item.Key</td>
+            </tr>
+
+            foreach (var subItem in item)
+            {
+            <tr>
+                <td>@subItem.CategoryName</td>
+                <td>@subItem.ProductName</td>
+            </tr>
+            }
+        }
+        </tbody>
+
+    </table>
+
