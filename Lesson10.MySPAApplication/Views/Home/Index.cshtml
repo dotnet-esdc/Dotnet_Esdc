@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>SPA</h2>
+
+<div ng-controller="productsController as ctrl">
+
+    <label>Our result:</label>
+    <label>{{ctrl.resultVal}}</label>
+
+
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in ctrl.collection"
+                        ng-click="ctrl.selectItem(item)">
+                        <td>{{item.ID}}</td>
+                        <td>{{item.Name}}</td>
+                        <td>{{item.Rating}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-4">
+            <div class="panel panel-default"
+                 ng-show="ctrl.element != null">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>ID</label>
+                        <input class="form-control" type="number" ng-model="ctrl.element.ID" />
+                    </div>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input class="form-control" type="text" ng-model="ctrl.element.Name" />
+                    </div>
+                    <div class="form-group">
+                        <label>Rating</label>
+                        <input class="form-control" type="number" ng-model="ctrl.element.Rating" />
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-success" ng-click="ctrl.save()">Save</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -31,49 +31,49 @@ namespace Lesson9.WebStore.Controllers
 
         public ActionResult Report()
         {
-            //var manager = new ProductReportManager();
+            var manager = new ProductReportManager(null, null, null);
 
-            //var data = manager.GetData();
+            var data = manager.GetData();
 
-            var data = new List<ProductReportDTO>();
+            //var data = new List<ProductReportDTO>();
 
-            data.Add(new ProductReportDTO()
-            {
-                CategoryName = "Cat1",
-                ClientName = "Cl1",
-                ProductName = "Prod1"
-            });
+            //data.Add(new ProductReportDTO()
+            //{
+            //    CategoryName = "Cat1",
+            //    ClientName = "Cl1",
+            //    ProductName = "Prod1"
+            //});
 
-            data.Add(new ProductReportDTO()
-            {
-                CategoryName = "Cat1",
-                ClientName = "Cl1",
-                ProductName = "Prod2"
-            });
-            data.Add(new ProductReportDTO()
-            {
-                CategoryName = "Cat1",
-                ClientName = "Cl1",
-                ProductName = "Prod3"
-            });
-            data.Add(new ProductReportDTO()
-            {
-                CategoryName = "Cat1",
-                ClientName = "Cl2",
-                ProductName = "Prod4"
-            });
-            data.Add(new ProductReportDTO()
-            {
-                CategoryName = "Cat1",
-                ClientName = "Cl2",
-                ProductName = "Prod5"
-            });
-            data.Add(new ProductReportDTO()
-            {
-                CategoryName = "Cat1",
-                ClientName = "Cl2",
-                ProductName = "Prod6"
-            });
+            //data.Add(new ProductReportDTO()
+            //{
+            //    CategoryName = "Cat1",
+            //    ClientName = "Cl1",
+            //    ProductName = "Prod2"
+            //});
+            //data.Add(new ProductReportDTO()
+            //{
+            //    CategoryName = "Cat1",
+            //    ClientName = "Cl1",
+            //    ProductName = "Prod3"
+            //});
+            //data.Add(new ProductReportDTO()
+            //{
+            //    CategoryName = "Cat1",
+            //    ClientName = "Cl2",
+            //    ProductName = "Prod4"
+            //});
+            //data.Add(new ProductReportDTO()
+            //{
+            //    CategoryName = "Cat1",
+            //    ClientName = "Cl2",
+            //    ProductName = "Prod5"
+            //});
+            //data.Add(new ProductReportDTO()
+            //{
+            //    CategoryName = "Cat1",
+            //    ClientName = "Cl2",
+            //    ProductName = "Prod6"
+            //});
 
             return View(data);
         }
