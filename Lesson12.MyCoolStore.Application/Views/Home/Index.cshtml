@@ -1,0 +1,152 @@
+@using Lesson12_MyCoolStore_Application.Entities
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Sales</h2>
+
+@(Html.DevExtreme().DataGrid<Sale>()
+    .ID("saleDataGrid")
+    .DataSource(ds => ds
+        .OData()
+        .Version(3)
+        .Url("/odata/Sales")
+        .Key("Id"))
+    .Editing(ed => ed
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+        .Mode(GridEditMode.Popup)
+        .Form(f => f
+            .ColCount(1)
+            .Items(gItem =>
+            {
+                gItem.AddGroup()
+                    .Caption("Main")
+                    .Items(items =>
+                    {
+                        items.AddSimpleFor(c => c.Id);
+
+                        items.AddSimpleFor(c => c.Date);
+
+                        items.AddSimpleFor(c => c.EmployeeId)
+                            .Editor(e => e
+                                .Lookup()
+                                    .DataSource(ds => ds
+                                        .OData()
+                                        .Version(3)
+                                        .Url("/odata/Employees")
+                                        .Key("Id"))
+                                    .ValueExpr("Id")
+                                    .DisplayExpr("Position"));
+
+                        items.AddSimpleFor(c => c.PriceFact);
+                    });
+
+                gItem.AddGroup()
+                    .Caption("Products")
+                    .Items(items =>
+                    {
+                        items.AddSimple()
+                            .Template(new TemplateName("SaleDetailTemplateName"));
+                    });
+            })))
+    .SearchPanel(sp => sp
+        .Visible(true)
+        .Placeholder("find me"))
+    .FilterRow(fr => fr
+        .Visible(true))
+    .OnEditingStart("saleDataGridOnEditingStart")
+    .Columns(cols =>
+    {
+        cols.AddFor(c => c.Id)
+            .Width(200);
+
+        cols.AddFor(c => c.Date);
+
+        cols.AddFor(c => c.EmployeeId)
+            .Caption("Employee")
+            .Lookup(l => l
+                .DataSource(ds => ds
+                    .OData()
+                    .Version(3)
+                    .Url("/odata/Employees")
+                    .Key("Id"))
+                .DisplayExpr("Position")
+                .ValueExpr("Id"));
+
+    })
+)
+
+@using (Html.DevExtreme().NamedTemplate("SaleDetailTemplateName"))
+{
+    <div id="saleDetailDataGridContainer" class="hide">
+        @(Html.DevExtreme().DataGrid<SaleDetail>()
+        .ID("saleDetailDataGrid")
+        .DataSource(ds => ds
+            .OData()
+            .Version(3)
+            .Url("/odata/SaleDetails")
+            .Key("Id"))
+        .DataSourceOptions(dsp => dsp
+            .Filter("['SaleId', '=', 0]"))
+        .Editing(ed => ed
+            .AllowAdding(true)
+            .AllowDeleting(true)
+            .AllowUpdating(true))
+        .OnInitNewRow("saleDetailDataGridOnInitNewRow")
+        .Columns(cols =>
+        {
+            cols.AddFor(c => c.Id)
+                .Width(200);
+
+            cols.AddFor(c => c.SaleId)
+                .Visible(false);
+
+            cols.AddFor(c => c.ProductId)
+            .Caption("Product")
+                .Lookup(l => l
+                    .DataSource(ds => ds
+                        .OData()
+                        .Version(3)
+                        .Url("/odata/Products")
+                        .Key("Id"))
+                    .DisplayExpr("Name")
+                    .ValueExpr("Id"));
+        })
+    )
+    </div>
+    
+}
+
+<script type="text/javascript">
+
+    var currentSaleId = 0;
+
+    function saleDetailDataGridOnInitNewRow(e) {
+        e.data.SaleId = currentSaleId;
+    }
+
+    function saleDataGridOnEditingStart(e) {
+
+        currentSaleId = e.key;
+        
+        setTimeout(function () {
+            var grid = getSaleDetailGrid();
+
+            var dataSource = grid.getDataSource();
+
+            console.log('1', dataSource);
+
+            dataSource.filter(['SaleId', '=', currentSaleId]);
+
+            dataSource.load();
+        }, 300);
+    }
+
+    function getSaleDetailGrid() {
+        return $('#saleDetailDataGrid').dxDataGrid('instance');
+    }
+    
+
+</script>

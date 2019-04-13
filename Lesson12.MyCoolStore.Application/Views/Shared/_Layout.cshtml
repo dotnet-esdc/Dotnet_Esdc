@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Lesson12_MyCoolStore_Application</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    @Styles.Render("~/Content/bundle")
+    @Styles.Render("~/Content/DevExtremeBundle")
+    @Scripts.Render("~/Scripts/bundle")
+    @Scripts.Render("~/Scripts/DevExtremeBundle")
+</head>
+
+<body>
+
+    <nav class="navbar navbar-dark bg-dark fixed-top navbar-expand-md">
+        <a class="navbar-brand" href="/">Lesson12_MyCoolStore_Application</a>
+
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="active nav-item"><a href="/Home/Index" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="/Dictionaries/Index" class="nav-link">Dictionaries</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main" class="container">
+        @RenderBody()
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+﻿@using Lesson12_MyCoolStore_Application.Entities
+@{
+    ViewBag.Title = "Employees";
+}
+
+<h2>Employees</h2>
+
+@(Html.DevExtreme().DataGrid<Employee>()
+    .DataSource(ds => ds
+        .OData()
+        .Version(3)
+        .Url("/odata/Employees")
+        .Key("Id"))
+    .Editing(ed => ed
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+        .Mode(GridEditMode.Popup)
+        .Form(f => f
+            .ColCount(1)))
+    .Columns(cols =>
+    {
+        cols.AddFor(c => c.Id)
+            .Width(200);
+
+        cols.AddFor(c => c.FullName);
+
+        cols.AddFor(c => c.Position);
+    })
+)

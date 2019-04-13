@@ -1,0 +1,41 @@
+﻿@using Lesson12_MyCoolStore_Application.Entities
+@{
+    ViewBag.Title = "Products";
+}
+
+<h2>Products</h2>
+
+@(Html.DevExtreme().DataGrid<Product>()
+    .DataSource(ds => ds
+        .OData()
+        .Version(3)
+        .Url("/odata/Products")
+        .Key("Id"))
+    .Editing(ed => ed
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+        .Mode(GridEditMode.Popup)
+        .Form(f => f
+            .ColCount(1)))
+    .Columns(cols => 
+    {
+        cols.AddFor(c => c.Id)
+            .Width(200);
+
+        cols.AddFor(c => c.Name);
+
+        cols.AddFor(c => c.Price);
+
+        cols.AddFor(c => c.CategoryId)
+            .Caption("Category")
+            .Lookup(l => l
+                .DataSource(ds => ds
+                    .OData()
+                    .Version(3)
+                    .Url("/odata/Categories")
+                    .Key("Id"))
+                .DisplayExpr("Name")
+                .ValueExpr("Id"));
+    })
+)
