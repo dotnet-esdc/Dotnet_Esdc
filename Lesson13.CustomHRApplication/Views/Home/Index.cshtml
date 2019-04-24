@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@Html.Partial("OrgUnitDataGridPartialView")
+@Html.Partial("PositionDataGridPartialView")
+@Html.Partial("StaffDataGridPartialView")
+
+@(Html.DevExtreme().TabPanel()
+    .Items(items =>
+    {
+        items.Add()
+            .Title("OrgUnits")
+            .Template(new TemplateName("orgUnitDataGridTemplate"));
+
+        items.Add()
+            .Title("Positions")
+            .Template(new TemplateName("PositiontDataGridTemplate"));
+
+        items.Add()
+            .Title("StaffList")
+            .Template(new TemplateName("StafftDataGridTemplate"));
+
+    })
+)

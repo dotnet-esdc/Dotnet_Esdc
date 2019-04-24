@@ -1,0 +1,22 @@
+﻿@using Lesson13.CustomHRApplication.Models
+
+@using (Html.DevExtreme().NamedTemplate("PositiontDataGridTemplate"))
+{
+    @(Html.DevExtreme().DataGrid<Lesson13.CustomHRApplication.Models.Position>()
+        .DataSource(ds => ds
+            .OData()
+            .Version(3)
+            .Url("/odata/Positions")
+            .Key("Id"))
+        .Editing(e => e
+            .AllowAdding(true)
+            .AllowDeleting(true)
+            .AllowUpdating(true))
+        .Columns(cols =>
+        {
+            cols.AddFor(c => c.Id);
+
+            cols.AddFor(c => c.Name);
+        })
+    )
+}

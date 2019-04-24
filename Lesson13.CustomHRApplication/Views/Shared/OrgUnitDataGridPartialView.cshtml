@@ -1,0 +1,22 @@
+﻿@using Lesson13.CustomHRApplication.Models
+
+@using (Html.DevExtreme().NamedTemplate("orgUnitDataGridTemplate"))
+{
+    @(Html.DevExtreme().DataGrid<OrgUnit>()
+        .DataSource(ds => ds
+            .OData()
+            .Version(3)
+            .Url("/odata/OrgUnits")
+            .Key("Id"))
+        .Editing(e => e
+            .AllowAdding(true)
+            .AllowDeleting(true)
+            .AllowUpdating(true))
+        .Columns(cols =>
+        {
+            cols.AddFor(c => c.Id);
+
+            cols.AddFor(c => c.Name);
+        })
+    )
+}

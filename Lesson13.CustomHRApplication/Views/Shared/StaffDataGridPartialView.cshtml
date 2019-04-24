@@ -1,0 +1,49 @@
+﻿@using Lesson13.CustomHRApplication.Models
+
+@using (Html.DevExtreme().NamedTemplate("StafftDataGridTemplate"))
+{
+    @(Html.DevExtreme().DataGrid<Staff>()
+        .DataSource(ds => ds
+            .OData()
+            .Version(3)
+            .Url("/odata/Staffs")
+            .Key("Id"))
+        .Editing(e => e
+            .AllowAdding(true)
+            .AllowDeleting(true)
+            .AllowUpdating(true))
+        .Columns(cols =>
+        {
+            cols.AddFor(c => c.Id);
+
+            cols.AddFor(c => c.OrgUnitId)
+                .Lookup(l => l
+                    .DataSource(ds => ds
+                        .OData()
+                        .Version(3)
+                        .Url("/odata/OrgUnits")
+                        .Key("Id"))
+                    .DisplayExpr("Name")
+                    .ValueExpr("Id"));
+
+            cols.AddFor(c => c.PositionId)
+                .Lookup(l => l
+                    .DataSource(ds => ds
+                        .OData()
+                        .Version(3)
+                        .Url("/odata/Positions")
+                        .Key("Id"))
+                    .ValueExpr("Id")
+                    .DisplayExpr("Name"));
+
+            cols.AddFor(c => c.ApplicationUserId)
+                .Lookup(l => l
+                    .DataSource(ds => ds
+                        .RemoteController()
+                        .LoadUrl("/api/ApplicationUsers")
+                        .Key("Id"))
+                    .DisplayExpr("UserName")
+                    .ValueExpr("Id"));
+        })
+    )
+}
